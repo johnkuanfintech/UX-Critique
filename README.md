@@ -85,6 +85,3 @@ Week 1: Research and wireframe the enhanced features.
 Week 2: Design and refine mockups in Figma/Adobe XD.
 
 Week 3: Build an interactive prototype and prepare the presentation.
-
-https://files.oaiusercontent.com/file-Kn1hu3bsxLARiX6KpBQNP5?se=2024-11-27T05%3A22%3A25Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D6788e4f7-baa3-4136-b0b4-3f859b79331b.webp&sig=xvPBvh07FiAUhX%2B3jGb4eMBz2bWLDK5bekuiiGxF/j4%3D![image](https://github.com/user-attachments/assets/c9709945-3d26-4920-8886-35e883c14fbf)
-
