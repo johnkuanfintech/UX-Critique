@@ -1,4 +1,4 @@
-UX Critique: Apple Pay from a Payments Specialist’s Perspective
+[b]UX Critique: Apple Pay from a Payments Specialist’s Perspective[/b]
 
 Apple Pay has revolutionized the digital payments landscape, blending convenience, security, and a seamless user experience. Drawing on my 15 years of experience in financial services and banking, including implementing treasury products and managing ACH and global payment systems, I’ve analyzed Apple Pay’s UX strengths and identified opportunities for improvement, particularly for enterprise and high-net-worth clients.
 
