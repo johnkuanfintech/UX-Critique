@@ -1,0 +1,68 @@
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch, ConnectionPatch
+
+# Initialize the figure
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 10)
+ax.axis('off')
+
+# Helper function to add text boxes
+def add_text_box(ax, x, y, width, height, text, color, fontsize=10, shadow=False):
+    if shadow:
+        shadow_box = FancyBboxPatch((x + 0.1, y - 0.1), width, height, boxstyle="round,pad=0.3", 
+                                    ec="none", fc="gray", alpha=0.3)
+        ax.add_patch(shadow_box)
+    box = FancyBboxPatch((x, y), width, height, boxstyle="round,pad=0.3", ec="none", fc=color, alpha=0.9)
+    ax.add_patch(box)
+    ax.text(x + width / 2, y + height / 2, text, color='black', ha='center', va='center', 
+            fontsize=fontsize, weight='medium', family='sans-serif')
+
+# Helper function to draw arrows
+def add_arrow(ax, start, end, color="#B0B0B0"):
+    con = ConnectionPatch(start, end, "data", "data", arrowstyle="->", lw=1.5, color=color)
+    ax.add_patch(con)
+
+# Define colors for Apple-like simplicity
+background_color = "#F2F2F2"
+strength_color = "#D4EDE5"  # Soft green
+opportunity_color = "#FCEFC7"  # Soft yellow
+final_thoughts_color = "#D8E7F9"  # Soft blue
+header_color = "#FFFFFF"
+header_text_color = "#000000"
+arrow_color = "#A0A0A0"
+
+# Set background color
+fig.patch.set_facecolor(background_color)
+
+# Title Section
+ax.text(6, 9.2, "UX Critique: Apple Pay from a Payments Specialist's Perspective", 
+        fontsize=16, ha='center', va='center', weight='bold', color=header_text_color, 
+        bbox=dict(facecolor=header_color, edgecolor='none', boxstyle='round,pad=0.5'))
+
+# Strengths Section
+add_text_box(ax, 1, 7.5, 3, 1, "Seamless Onboarding\n- Intuitive process\n- Secure tokenization", strength_color, fontsize=10, shadow=True)
+add_text_box(ax, 5, 7.5, 3, 1, "Security Without Friction\n- Biometric authentication\n- Dynamic codes", strength_color, fontsize=10, shadow=True)
+add_text_box(ax, 9, 7.5, 3, 1, "Integration Across Ecosystem\n- Works on iOS, macOS\n- Multiple devices", strength_color, fontsize=10, shadow=True)
+
+# Opportunities Section
+add_text_box(ax, 1, 4.5, 3, 1, "Recurring Payments\n- Visibility tools", opportunity_color, fontsize=10, shadow=True)
+add_text_box(ax, 5, 4.5, 3, 1, "Enterprise Customization\n- Multi-level approvals", opportunity_color, fontsize=10, shadow=True)
+add_text_box(ax, 9, 4.5, 3, 1, "Cross-Border Payments\n- Real-time FX rates", opportunity_color, fontsize=10, shadow=True)
+add_text_box(ax, 1, 2.5, 3, 1, "Bulk Provisioning\n- API for corporate users", opportunity_color, fontsize=10, shadow=True)
+add_text_box(ax, 5, 2.5, 3, 1, "Multi-level Approvals\n- Audit trails", opportunity_color, fontsize=10, shadow=True)
+add_text_box(ax, 9, 2.5, 3, 1, "User Feedback Loop\n- Feedback forms", opportunity_color, fontsize=10, shadow=True)
+
+# Final Thoughts Section
+add_text_box(ax, 3.5, 0.5, 5, 1, "Final Thoughts\n- Expand enterprise features\n- Enhance high-value transactions", final_thoughts_color, fontsize=12, shadow=True)
+
+# Draw arrows to show workflow
+add_arrow(ax, (2.5, 7.5), (2.5, 5.5), color=arrow_color)
+add_arrow(ax, (6.5, 7.5), (6.5, 5.5), color=arrow_color)
+add_arrow(ax, (10.5, 7.5), (10.5, 5.5), color=arrow_color)
+add_arrow(ax, (6, 4.5), (6, 2), color=arrow_color)
+add_arrow(ax, (6, 2), (6, 1), color=arrow_color)
+
+# Show the plot
+plt.tight_layout()
+plt.show()
