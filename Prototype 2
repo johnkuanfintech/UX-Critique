@@ -1,32 +1,45 @@
-# Open the following link to see the prototype: https://claude.site/artifacts/a679370e-5b80-45a8-98b7-a8a99a6685f4
+# Open the following link to see the prototype: https://claude.site/artifacts/946aea05-7c0c-433e-af35-1f66aba42cbb
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Bell, CreditCard, Settings, Users, Calendar, DollarSign, RefreshCcw } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
+import { Bell, CreditCard, Settings, Users, Calendar, DollarSign, RefreshCcw, Building, Globe, Shield, Wallet, TrendingUp, AlertTriangle } from 'lucide-react';
 
-// Mock Data
+// Enhanced Mock Data
 const mockTransactions = [
-  { id: 1, date: '2024-12-27', amount: 12500, type: 'Payment', merchant: 'AWS Cloud Services', status: 'Completed' },
-  { id: 2, date: '2024-12-27', amount: 5000, type: 'Subscription', merchant: 'Microsoft 365', status: 'Pending' },
-  { id: 3, date: '2024-12-26', amount: 25000, type: 'Transfer', merchant: 'Internal Treasury', status: 'Completed' },
+  { id: 1, date: '2024-12-27', amount: 1250000, type: 'Payment', merchant: 'AWS Cloud Infrastructure', status: 'Completed', department: 'Technology' },
+  { id: 2, date: '2024-12-27', amount: 850000, type: 'Payment', merchant: 'Microsoft Enterprise', status: 'Pending', department: 'Operations' },
+  { id: 3, date: '2024-12-26', amount: 2500000, type: 'Transfer', merchant: 'Internal Treasury', status: 'Completed', department: 'Finance' },
+  { id: 4, date: '2024-12-26', amount: 750000, type: 'Payment', merchant: 'Salesforce Enterprise', status: 'Completed', department: 'Sales' },
+  { id: 5, date: '2024-12-25', amount: 1750000, type: 'Investment', merchant: 'Capital Expenditure', status: 'Completed', department: 'Operations' },
 ];
 
 const mockSpendingData = [
-  { month: 'Jul', amount: 45000 },
-  { month: 'Aug', amount: 52000 },
-  { month: 'Sep', amount: 49000 },
-  { month: 'Oct', amount: 63000 },
-  { month: 'Nov', amount: 58000 },
-  { month: 'Dec', amount: 72000 },
+  { month: 'Jul', amount: 4500000, forecast: 4800000 },
+  { month: 'Aug', amount: 5200000, forecast: 5000000 },
+  { month: 'Sep', amount: 4900000, forecast: 5100000 },
+  { month: 'Oct', amount: 6300000, forecast: 6000000 },
+  { month: 'Nov', amount: 5800000, forecast: 5500000 },
+  { month: 'Dec', amount: 7200000, forecast: 7000000 },
 ];
 
 const mockSubscriptions = [
-  { id: 1, name: 'AWS Cloud Services', amount: 12500, renewalDate: '2025-01-27', status: 'Active' },
-  { id: 2, name: 'Microsoft 365', amount: 5000, renewalDate: '2025-01-15', status: 'Active' },
-  { id: 3, name: 'Salesforce Enterprise', amount: 8000, renewalDate: '2025-01-10', status: 'Active' },
+  { id: 1, name: 'AWS Cloud Infrastructure', amount: 1250000, renewalDate: '2025-01-27', status: 'Active', users: 5000 },
+  { id: 2, name: 'Microsoft Enterprise Suite', amount: 850000, renewalDate: '2025-01-15', status: 'Active', users: 10000 },
+  { id: 3, name: 'Salesforce Enterprise', amount: 750000, renewalDate: '2025-01-10', status: 'Active', users: 2500 },
+  { id: 4, name: 'Oracle Cloud Platform', amount: 650000, renewalDate: '2025-01-05', status: 'Active', users: 1000 },
 ];
+
+const departmentSpending = [
+  { name: 'Technology', value: 3500000 },
+  { name: 'Operations', value: 2600000 },
+  { name: 'Sales', value: 1800000 },
+  { name: 'Marketing', value: 1200000 },
+  { name: 'Finance', value: 900000 },
+];
+
+const COLORS = ['#2563eb', '#16a34a', '#ea580c', '#7c3aed', '#be185d'];
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -37,10 +50,14 @@ const Dashboard = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Enterprise Wallet</h1>
-            <p className="text-gray-500">Welcome back, Enterprise Admin</p>
+            <h1 className="text-3xl font-bold text-gray-900">Global Enterprise Treasury</h1>
+            <p className="text-gray-500">Financial Operations Dashboard</p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
+            <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg flex items-center">
+              <AlertTriangle className="w-4 h-4 mr-2" />
+              <span className="text-sm">3 Pending Approvals</span>
+            </div>
             <Bell className="w-6 h-6 text-gray-500" />
             <Settings className="w-6 h-6 text-gray-500" />
           </div>
@@ -53,7 +70,8 @@ const Dashboard = () => {
               <DollarSign className="w-8 h-8 text-blue-500 mr-4" />
               <div>
                 <p className="text-sm text-gray-500">Total Balance</p>
-                <p className="text-2xl font-bold">$245,000</p>
+                <p className="text-2xl font-bold">$245M</p>
+                <p className="text-xs text-green-500">+2.5% from last month</p>
               </div>
             </CardContent>
           </Card>
@@ -62,16 +80,18 @@ const Dashboard = () => {
               <RefreshCcw className="w-8 h-8 text-green-500 mr-4" />
               <div>
                 <p className="text-sm text-gray-500">Monthly Spend</p>
-                <p className="text-2xl font-bold">$72,000</p>
+                <p className="text-2xl font-bold">$7.2M</p>
+                <p className="text-xs text-red-500">+24% from last month</p>
               </div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="flex items-center p-6">
-              <Calendar className="w-8 h-8 text-purple-500 mr-4" />
+              <Building className="w-8 h-8 text-purple-500 mr-4" />
               <div>
-                <p className="text-sm text-gray-500">Active Subscriptions</p>
-                <p className="text-2xl font-bold">8</p>
+                <p className="text-sm text-gray-500">Business Units</p>
+                <p className="text-2xl font-bold">12</p>
+                <p className="text-xs text-gray-500">Across 8 regions</p>
               </div>
             </CardContent>
           </Card>
@@ -79,8 +99,9 @@ const Dashboard = () => {
             <CardContent className="flex items-center p-6">
               <Users className="w-8 h-8 text-orange-500 mr-4" />
               <div>
-                <p className="text-sm text-gray-500">Team Members</p>
-                <p className="text-2xl font-bold">12</p>
+                <p className="text-sm text-gray-500">Licensed Users</p>
+                <p className="text-2xl font-bold">18.5K</p>
+                <p className="text-xs text-green-500">+500 this month</p>
               </div>
             </CardContent>
           </Card>
@@ -92,27 +113,60 @@ const Dashboard = () => {
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="transactions">Transactions</TabsTrigger>
             <TabsTrigger value="subscriptions">Subscriptions</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
-            <Card>
-              <CardHeader>
-                <CardTitle>Spending Overview</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-[300px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={mockSpendingData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="month" />
-                      <YAxis />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="amount" stroke="#2563eb" />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Spending vs. Forecast</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={mockSpendingData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="amount" stroke="#2563eb" name="Actual" />
+                        <Line type="monotone" dataKey="forecast" stroke="#9ca3af" strokeDasharray="5 5" name="Forecast" />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Department Spending Distribution</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={departmentSpending}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {departmentSpending.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           <TabsContent value="transactions">
@@ -128,11 +182,15 @@ const Dashboard = () => {
                         <CreditCard className="w-6 h-6 text-gray-400 mr-4" />
                         <div>
                           <p className="font-medium">{transaction.merchant}</p>
-                          <p className="text-sm text-gray-500">{transaction.date}</p>
+                          <div className="flex space-x-2 text-sm text-gray-500">
+                            <span>{transaction.date}</span>
+                            <span>•</span>
+                            <span>{transaction.department}</span>
+                          </div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-medium">${transaction.amount.toLocaleString()}</p>
+                        <p className="font-medium">${(transaction.amount / 1000000).toFixed(1)}M</p>
                         <p className={`text-sm ${
                           transaction.status === 'Completed' ? 'text-green-500' : 'text-orange-500'
                         }`}>
@@ -149,7 +207,7 @@ const Dashboard = () => {
           <TabsContent value="subscriptions">
             <Card>
               <CardHeader>
-                <CardTitle>Active Subscriptions</CardTitle>
+                <CardTitle>Enterprise Subscriptions</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -157,10 +215,14 @@ const Dashboard = () => {
                     <div key={subscription.id} className="flex items-center justify-between p-4 bg-white border rounded-lg">
                       <div>
                         <p className="font-medium">{subscription.name}</p>
-                        <p className="text-sm text-gray-500">Renews: {subscription.renewalDate}</p>
+                        <div className="flex space-x-2 text-sm text-gray-500">
+                          <span>Renews: {subscription.renewalDate}</span>
+                          <span>•</span>
+                          <span>{subscription.users.toLocaleString()} users</span>
+                        </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-medium">${subscription.amount.toLocaleString()}/month</p>
+                        <p className="font-medium">${(subscription.amount / 1000000).toFixed(1)}M/month</p>
                         <p className="text-sm text-green-500">{subscription.status}</p>
                       </div>
                     </div>
@@ -168,6 +230,67 @@ const Dashboard = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="analytics">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Key Metrics</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500">Average Transaction Value</span>
+                      <span className="font-medium">$1.42M</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500">Monthly Active Users</span>
+                      <span className="font-medium">15.2K</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500">Subscription Utilization</span>
+                      <span className="font-medium">87%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500">Cost per User</span>
+                      <span className="font-medium">$389</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Compliance Status</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-2 bg-green-50 rounded">
+                      <div className="flex items-center">
+                        <Shield className="w-4 h-4 text-green-500 mr-2" />
+                        <span className="text-green-700">SOC 2 Compliance</span>
+                      </div>
+                      <span className="text-green-500">Valid until 2025</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-green-50 rounded">
+                      <div className="flex items-center">
+                        <Globe className="w-4 h-4 text-green-500 mr-2" />
+                        <span className="text-green-700">GDPR Compliance</span>
+                      </div>
+                      <span className="text-green-500">Certified</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-yellow-50 rounded">
+                      <div className="flex items-center">
+                        <Wallet className="w-4 h-4 text-yellow-500 mr-2" />
+                        <span className="text-yellow-700">PCI DSS</span>
+                      </div>
+                      <span className="text-yellow-500">Review Required</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
